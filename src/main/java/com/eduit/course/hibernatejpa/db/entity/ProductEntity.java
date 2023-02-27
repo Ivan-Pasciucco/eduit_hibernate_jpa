@@ -1,47 +1,47 @@
 package com.eduit.course.hibernatejpa.db.entity;
 
-import java.util.Date;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "categories")
-public class CategoryEntity {
+@Table(name = ProductEntity.TABLE_NAME)
+public class ProductEntity {
+
+	public static final String TABLE_NAME = "products";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String name;
+	@Column(nullable = true, unique = true)
+	private String description;
 
 	@ManyToOne
-	@JoinColumn(name = "parent_id")
-	private CategoryEntity parent;
+	@JoinColumn(name = "category_id", nullable = false)
+	private CategoryEntity category;
 
-	@OneToMany(mappedBy = "parent")
-	private Set<CategoryEntity> children;
+	@Column(nullable = false)
+	private BigDecimal price;
 
-	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-	private Set<ProductEntity> products;
+	@Column(nullable = false)
+	private Integer qty;
 
 	@Column(name = "date_created", nullable = false)
 	private Date dateCreated;
-
 	@Column(name = "date_deleted", nullable = true)
 	private Date dateDeleted;
 
-	public CategoryEntity() {
+	public ProductEntity() {
 
 	}
 
@@ -49,8 +49,8 @@ public class CategoryEntity {
 		return id;
 	}
 
-	public void setId(final Long theId) {
-		id = theId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -61,28 +61,36 @@ public class CategoryEntity {
 		this.name = name;
 	}
 
-	public CategoryEntity getParent() {
-		return parent;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setParent(CategoryEntity parent) {
-		this.parent = parent;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public Set<CategoryEntity> getChildren() {
-		return children;
+	public CategoryEntity getCategory() {
+		return category;
 	}
 
-	public void setChildren(Set<CategoryEntity> children) {
-		this.children = children;
+	public void setCategory(CategoryEntity category) {
+		this.category = category;
 	}
 
-	public Set<ProductEntity> getProducts() {
-		return products;
+	public BigDecimal getPrice() {
+		return price;
 	}
 
-	public void setProducts(Set<ProductEntity> products) {
-		this.products = products;
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public Integer getQty() {
+		return qty;
+	}
+
+	public void setQty(Integer qty) {
+		this.qty = qty;
 	}
 
 	public Date getDateCreated() {
@@ -100,5 +108,6 @@ public class CategoryEntity {
 	public void setDateDeleted(Date dateDeleted) {
 		this.dateDeleted = dateDeleted;
 	}
+
 
 }

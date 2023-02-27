@@ -5,49 +5,62 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = UserEntity.TABLE_NAME)
+/**
+ * This class is mean to represent the database {@link ProductEntity.TABLE_NAME} table.
+ * 
+ * @author Federico Vittorini.
+ *
+ */
 public class UserEntity {
 
 	public static final String TABLE_NAME = "users";
-
 	@Id
-	@GeneratedValue
-	private Long Id;
-
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	/**
+	 * This is the entity id.
+	 * If this attribute is null, that means the entity is not persisted yet.
+	 */
+	private Long id;
+	
 	@Column(nullable = false, unique = true)
 	private String username;
-
+	
 	@Column(name = "first_name", nullable = false)
 	private String firstName;
-
+	
 	@Column(name = "last_name", nullable = false)
-	private String lastNane;
-
+	private String lastName;
+	
 	@Column(nullable = false, unique = true)
 	private String email;
-
+	
 	@Column(nullable = false)
 	private String password;
-
+	
 	@Column(name = "date_created", nullable = false)
-	private Date DateCreated;
+	private Date dateCreated;
+	
 	@Column(name = "date_deleted", nullable = true)
-	private Date DateDeleted;
-
-	public UserEntity() {
-
-	}
+	private Date dateDeleted;
+	
+	/**
+	 * This is the default empty class constructor required by Hibernate. 
+	 */
+	public UserEntity() {}
 
 	public Long getId() {
-		return Id;
+		return id;
 	}
 
-	public void setId(Long id) {
-		Id = id;
+	public void setId(final Long id) {
+		this.id = id;
 	}
 
 	public String getUsername() {
@@ -66,20 +79,12 @@ public class UserEntity {
 		this.firstName = firstName;
 	}
 
-	public String getLastNane() {
-		return lastNane;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLastNane(String lastNane) {
-		this.lastNane = lastNane;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getPassword() {
@@ -89,25 +94,32 @@ public class UserEntity {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public Date getDateCreated() {
-		return DateCreated;
+		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-		DateCreated = dateCreated;
+		this.dateCreated = dateCreated;
 	}
 
 	public Date getDateDeleted() {
-		return DateDeleted;
+		return dateDeleted;
 	}
 
 	public void setDateDeleted(Date dateDeleted) {
-		DateDeleted = dateDeleted;
+		this.dateDeleted = dateDeleted;
 	}
 
-	public static String getTableName() {
-		return TABLE_NAME;
-	}
-
+	
+	
 }
+
